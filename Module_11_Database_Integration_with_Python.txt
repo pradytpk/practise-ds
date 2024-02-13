@@ -1,0 +1,66 @@
+-- 1. Create a database called retails
+CREATE DATABASE retails;
+
+-- 2. Connect to the newly created database
+USE retails;
+
+-- 3. Create tables called customer and orders
+CREATE TABLE customer (
+    customer_id INT PRIMARY KEY,
+    age INT,
+    city VARCHAR(255),
+    gender VARCHAR(255)
+);
+
+CREATE TABLE orders (
+    order_date DATE,
+    order_amount DECIMAL(10, 2),
+    customer_id INT,
+    is_sale BOOLEAN
+);
+
+-- 4. Add a new ‘is_sale’ column in ‘orders’ table
+ALTER TABLE orders
+ADD COLUMN is_sale BOOLEAN;
+
+-- 5. Insert values into the customer table
+INSERT INTO customer (customer_id, age, city, gender)
+VALUES
+    (1001, 34, 'Austin', 'male'),
+    (1002, 37, 'Houston', 'male'),
+    (1003, 25, 'Austin', 'female'),
+    (1004, 28, 'Houston', 'female'),
+    (1005, 22, 'Dallas', 'male');
+
+-- 6. Show the details of customers who are located in Austin City
+SELECT * FROM customer WHERE city = 'Austin';
+
+-- 7. Group customers based on location and display the information
+SELECT city, COUNT(*) as num_customers FROM customer GROUP BY city;
+
+-- 8. Group customers based on their gender and display the information
+SELECT gender, COUNT(*) as num_customers FROM customer GROUP BY gender;
+
+-- 9. Insert values into the orders table
+INSERT INTO orders (order_date, order_amount, customer_id, is_sale)
+VALUES
+    ('2022-10-1', 100.25, 1, true),
+    ('2022-10-2', 200.75, 2, false),
+    ('2022-10-3', 500.00, 3, true),
+    ('2022-10-3', 600.00, 4, true),
+    ('2022-10-4', 600.00, 5, false);
+
+-- 10. Show order details that were purchased on 2022-10-03
+SELECT * FROM orders WHERE order_date = '2022-10-03';
+
+-- 11. Show orders that have an order amount of more than 300
+SELECT * FROM orders WHERE order_amount > 300;
+
+-- 12. Count the number of distinct days in the data
+SELECT COUNT(DISTINCT order_date) FROM orders;
+
+-- 13. Count the orders grouped by date
+SELECT order_date, COUNT(*) as num_orders FROM orders GROUP BY order_date;
+
+-- 14. Calculate the average order amount for all
+SELECT AVG(order_amount) as avg_order_amount FROM orders;
